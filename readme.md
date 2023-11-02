@@ -2,7 +2,7 @@
 
 В задании не указана глубина парсинга ссылок, поэтому добавлен параметр DEPTH = 2
 
-Файл app.py
+<h3>Файл app.py</h3>
 
 usage: app.py [-h] -u URL [-f FILE] [-d DEPTH]
 
@@ -12,7 +12,7 @@ options:
   -f FILE, --file FILE
   -d DEPTH, --depth DEPTH
 
-Файл app-async.py
+<h3>Файл app-async.py</h3>h3
 usage: app-async.py [-h] -u URL [-f FILE] [-d DEPTH] [-w WORKERS]
 
 options:
