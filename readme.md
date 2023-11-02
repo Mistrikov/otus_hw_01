@@ -12,7 +12,7 @@ options:
   -f FILE, --file FILE
   -d DEPTH, --depth DEPTH
 
-<h3>Файл app-async.py</h3>h3
+<h3>Файл app-async.py</h3>
 usage: app-async.py [-h] -u URL [-f FILE] [-d DEPTH] [-w WORKERS]
 
 options:
