@@ -11,3 +11,13 @@ options:
   -u URL, --url URL
   -f FILE, --file FILE
   -d DEPTH, --depth DEPTH
+
+Файл app-async.py
+usage: app-async.py [-h] -u URL [-f FILE] [-d DEPTH] [-w WORKERS]
+
+options:
+  -h, --help            show this help message and exit
+  -u URL, --url URL
+  -f FILE, --file FILE
+  -d DEPTH, --depth DEPTH
+  -w WORKERS, --workers WORKERS
