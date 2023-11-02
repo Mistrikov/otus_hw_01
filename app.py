@@ -1,0 +1,1 @@
+print('https://github.com/Mistrikov/otus_hw_01.git')
