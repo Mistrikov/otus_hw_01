@@ -1,7 +1,9 @@
 import asyncio, aiohttp
 import sys
 import argparse
+import time
 from bs4 import BeautifulSoup as bs
+from urllib.parse import urljoin, urlparse
 
 from asyncio import ALL_COMPLETED
 
@@ -11,13 +13,17 @@ async def handle_update(queue, link, depth, max_depth):
     links = []
     async with aiohttp.ClientSession() as session:
         resp = await session.get(link)
+        base_url=f'{urlparse(link)[0]}://{urlparse(link)[1]}'
+        #print(base_url)
         resp_data = await resp.text()
         soup = bs(resp_data, 'html.parser')
         for link in soup.find_all('a'):
-            href = link.get('href')
-            links.append(href)
+            lnk = urljoin(base_url, link.get('href')) # формируем валидную ссылку
+            if lnk.startswith('tel') or lnk.startswith('mailto') or lnk.startswith('javascript') or lnk.startswith('tg'): # убрать такие ссылки 
+                continue
+            links.append(lnk)
             if depth < max_depth:
-                queue.put_nowait((href, depth+1))
+                queue.put_nowait((lnk, depth+1))
     return links 
 
 async def _worker(queue, num, max_depth):
@@ -29,7 +35,6 @@ async def _worker(queue, num, max_depth):
         url, depth = await queue.get()
         urls += await handle_update(queue, url, depth, max_depth) 
         queue.task_done()
-        #print(f"worker {num} next")
     #print(f"worker {num} end")
     return urls
 
@@ -75,5 +80,6 @@ async def main(url: str, filename: str, max_depth: int, workers: int):
 if __name__ == '__main__':
     parser = createParser()
     args = parser.parse_args (sys.argv[1:])
-
+    start_time = time.time()
     asyncio.run(main(args.url, args.file, args.depth, args.workers))
+    print("--- %s seconds ---" % (time.time() - start_time))
